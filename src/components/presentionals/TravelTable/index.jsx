@@ -1,6 +1,9 @@
 import React from 'react';
 
+import TravelRequest from '../../functionals/TravelRequest';
+
 export default function Travels() {
+
     return (
         <div className='container'>
             <table className='table table-dark'>
@@ -18,10 +21,10 @@ export default function Travels() {
                         <th>Buy Ticket</th>
                     </tr>
                 </thead>
-                <tbody>
-                </tbody>
+                <TravelRequest />
             </table>
         </div>
     );
 };
+
 

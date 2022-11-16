@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import Travels from './components/presentionals/Travels';
+import TravelTable from './components/presentionals/TravelTable';
 
 export default function App() {
     return (
         <Router>
             <Routes>
-                <Route exact path='/' element={<Travels />} />
+                <Route exact path='/' element={<TravelTable />} />
             </Routes>
         </Router>
     );
