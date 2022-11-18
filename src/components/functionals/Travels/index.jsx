@@ -22,10 +22,10 @@ export default function Travels() {
   }, []);
 
   return (
-    <tbody>
-      {
-        !isLoading ?
-          <LoadingSpinner /> :
+    !isLoading ?
+      <LoadingSpinner /> :
+      <tbody>
+        {
           travels.map(travel =>
             <tr key={travel.id}>
               <td>{travel.id}</td>
@@ -41,8 +41,8 @@ export default function Travels() {
               <td><button className='btn btn-outline-warning' onClick={handleBuy}>Buy</button></td>
             </tr>
           )
-      }
-    </tbody>
+        }
+      </tbody>
   );
 };
 

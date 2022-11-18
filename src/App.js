@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import TravelDetail from './components/presentionals/TravelDetail';
+import TravelDetail from './components/functionals/TravelDetail';
 import TravelTable from './components/presentionals/TravelTable';
 
 export default function App() {
