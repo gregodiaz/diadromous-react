@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import LoadingSpinner from '../../presentionals/LoadingSpinner';
 import { getTravels } from '../../../services/TravelService';
 
+import LoadingSpinner from '../../presentionals/LoadingSpinner';
+
 export default function Travels() {
+  const navigate = useNavigate()
+
   const [isLoading, setIsLoading] = useState(false)
   const [travels, setTravels] = useState([])
 
@@ -14,7 +18,6 @@ export default function Travels() {
     setIsLoading(true);
   };
 
-  const handleShow = event => { event.preventDefault() };
   const handleBuy = event => { event.preventDefault() };
 
   useEffect(() => {
@@ -37,8 +40,16 @@ export default function Travels() {
               <td>{travel.arrival_date}</td>
               <td>{travel.total_passengers}</td>
               <td>{travel.available_passengers}</td>
-              <td><button className='btn btn-outline-info' onClick={handleShow}>Show</button></td>
-              <td><button className='btn btn-outline-warning' onClick={handleBuy}>Buy</button></td>
+              <td>
+                <button className='btn btn-outline-info' onClick={() => navigate(`/${travel.id}`)}>
+                  Show
+                </button>
+              </td>
+              <td>
+                <button className='btn btn-outline-warning' onClick={handleBuy}>
+                  Buy
+                </button>
+              </td>
             </tr>
           )
         }

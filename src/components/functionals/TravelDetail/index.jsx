@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import LoadingSpinner from '../../presentionals/LoadingSpinner';
-import { CardHeader, CardBodyLi } from './style';
 import { getTravel } from '../../../services/TravelService';
+
+import LoadingSpinner from '../../presentionals/LoadingSpinner';
+import { Back, Buy, Next, Prev } from '../../functionals/Buttons';
+import { CardHeader, CardBodyLi } from './style';
 
 export default function TravelDetail() {
   const params = useParams()
@@ -12,6 +14,7 @@ export default function TravelDetail() {
   const [travel, setTravel] = useState()
 
   const getTravelDetail = async () => {
+    setIsLoading(false);
     const travelDetail = await getTravel(params.id)
 
     setTravel(travelDetail);
@@ -38,6 +41,7 @@ export default function TravelDetail() {
               arrival={travel.cities[1].name}
               id={travel.id}
             />
+
             <div className="card-body">
               <ul className="list-group list-group-flush">
                 <CardBodyLi
@@ -46,12 +50,14 @@ export default function TravelDetail() {
                   rightTitle={'Price'}
                   rightText={`$ ${travel.price}`}
                 />
+
                 <CardBodyLi
                   leftTitle={travel.cities[1].type_name}
                   leftText={`${travel.arrival_date} - ${travel.cities[1].name}`}
                   rightTitle={'Tickets [Remaining/Total]'}
                   rightText={`${travel.available_passengers}/${travel.total_passengers}`}
                 />
+                
                 <CardBodyLi
                   leftTitle={'Validation'}
                   leftText={
@@ -62,14 +68,16 @@ export default function TravelDetail() {
                       )
                   }
                 />
+
                 <li className="list-group-item bg-dark text-white">
                   <div className="container d-flex justify-content-between">
-                    <button className="btn btn-secondary">Back</button>
-                    <button className="btn btn-outline-primary">Prev</button>
-                    <button className="btn btn-outline-primary">Next</button>
-                    <button className="btn btn-warning">Buy</button>
+                    <Back />
+                    <Prev />
+                    <Next />
+                    <Buy />
                   </div>
                 </li>
+
               </ul>
             </div>
           </div>
