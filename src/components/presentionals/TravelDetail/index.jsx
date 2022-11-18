@@ -1,68 +1,78 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+import { getTravel } from '../../../services/TravelService';
 
 export default function TravelDetail() {
+    const params = useParams()
+
+    const [travel, setTravel] = useState({ "id": 0, "price": "", "departure_date": "", "arrival_date": "", "total_passengers": 0, "available_passengers": 0, "cities": [{ "type_name": "Departure", "name": "", }, { "type_name": "", "name": "", }], "validation": { "2022-11-18": 0 } })
+
+    const getTravelDetail = async () => {
+        const travelDetail = await getTravel(params.id)
+        setTravel(travelDetail);
+    };
+
+    useEffect(() => {
+        getTravelDetail()
+    }, []);
 
     return (
         <div className='container-fluid w-auto m-5'>
-            <div className="card bg-dark text-white" >
+
+            <div className="card bg-dark text-white">
                 <div className="card-header">
                     <div className="container d-flex justify-content-between p-4">
-                        <div>From City A to City B</div>
-                        <div>#1</div>
-                    </div >
+                        <div>From <i>{travel.cities[0].name}</i> to <i>{travel.cities[1].name}</i></div>
+                        <div>#{travel.id}</div>
+                    </div>
                 </div>
                 <div className="card-body">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item bg-dark text-white">
+                    <ul className="list-group list-group-flush">
+                        <li className="list-group-item bg-dark text-white">
                             <div className="container">
                                 <div className="row">
-                                    <div className="col col-sm-8">Departure</div>
+                                    <div className="col col-sm-8">{travel.cities[0].type_name}</div>
                                     <div className="col">Price</div>
                                 </div>
                                 <div className="row">
-                                    <div className="col col-sm-2">Buenos Aires</div>
-                                    <div className="col col-sm-6">18/11/2022 - 19:36:43</div>
-                                    <div className="col">$6943.96</div>
+                                    <div className="col col-sm-2">{travel.cities[0].name}</div>
+                                    <div className="col col-sm-6">{travel.departure_date}</div>
+                                    <div className="col">${travel.price}</div>
                                 </div>
-                            </div >
+                            </div>
                         </li>
-                        <li class="list-group-item bg-dark text-white">
+                        <li className="list-group-item bg-dark text-white">
                             <div className="container">
                                 <div className="row">
                                     <div className="col col-sm-8">Arrival</div>
                                     <div className="col">Tickets [Remaining/Total]</div>
                                 </div>
                                 <div className="row">
-                                    <div className="col col-sm-2">Buenos</div>
-                                    <div className="col col-sm-6">18/11/2022 - 19:36:43</div>
-                                    <div className="col">43/65</div>
+                                    <div className="col col-sm-2">{travel.cities[1].name}</div>
+                                    <div className="col col-sm-6">{travel.arrival_date}</div>
+                                    <div className="col">
+                                        {travel.available_passengers}/{travel.total_passengers}
+                                    </div>
                                 </div>
                             </div>
                         </li>
-                        <li class="list-group-item bg-dark text-white">
+                        <li className="list-group-item bg-dark text-white">
                             <div className="container">
                                 <div className="row">
                                     <div className="col">Validation</div>
                                 </div>
-                                <div className="row">
-                                    <div className="col col-sm-2">18/11/2022</div>
-                                    <div className="col col-sm-2">64%</div>
-                                </div>
-                                <div className="row">
-                                    <div className="col col-sm-2">18/11/2022</div>
-                                    <div className="col col-sm-2">64%</div>
-                                </div>
-                                <div className="row">
-                                    <div className="col col-sm-2">18/11/2022</div>
-                                    <div className="col col-sm-2">64%</div>
-                                </div>
-                                <div className="row">
-                                    <div className="col col-sm-2">18/11/2022</div>
-                                    <div className="col col-sm-2">64%</div>
-                                </div>
+                                {
+                                    Object.keys(travel.validation).map(date =>
+                                        <div className="row" key={date}>
+                                            <div className="col col-sm-2">{date}</div>
+                                            <div className="col col-sm-2">{travel.validation[date]}%</div>
+                                        </div>
+                                    )
+                                }
                             </div>
                         </li>
-                        <li class="list-group-item bg-dark text-white">
+                        <li className="list-group-item bg-dark text-white">
                             <div className="container d-flex justify-content-between">
                                 <button className="btn btn-secondary">Back</button>
                                 <button className="btn btn-outline-primary">Prev</button>
@@ -72,10 +82,8 @@ export default function TravelDetail() {
                         </li>
                     </ul>
                 </div>
-            </div >
-        </div >
+            </div>
+        </div>
     );
 };
-
-
 
