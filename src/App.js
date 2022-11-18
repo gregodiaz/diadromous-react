@@ -5,12 +5,13 @@ import TravelDetail from './components/presentionals/TravelDetail';
 import TravelTable from './components/presentionals/TravelTable';
 
 export default function App() {
-    return (
-        <Router>
-            <Routes>
-                <Route exact path='/' element={<TravelTable />} />
-                <Route exact path='/:id' element={<TravelDetail />} />
-            </Routes>
-        </Router>
-    );
+  return (
+    <Router>
+      <Routes>
+        <Route exact path='/' element={<TravelTable />} />
+        <Route exact path='/:id' element={<TravelDetail />} />
+      </Routes>
+    </Router>
+  );
 };
+
