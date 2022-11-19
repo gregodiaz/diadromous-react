@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { signRequest } from '../../../services/SingService';
+
 export default function Sign() {
   const navigate = useNavigate()
 
@@ -27,6 +29,12 @@ export default function Sign() {
 
   const handleSubmit = async event => {
     event.preventDefault()
+
+    const data = await signRequest(body, uri)
+
+    window.sessionStorage.setItem("token", data.token);
+    setBody({ name: '', email: '', password: '' })
+    navigate('/')
   }
 
   useEffect(() => {
