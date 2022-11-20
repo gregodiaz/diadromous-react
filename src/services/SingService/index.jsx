@@ -14,9 +14,13 @@ export const signRequest = async (body, signType) => {
       body: JSON.stringify(body)
     }
   );
-  const data = await response.json();
 
-  return data;
+  const data = await response.json();
+  window.sessionStorage.setItem('token', data.token)
+
+  const user = getUser()
+
+  return user;
 };
 
 export const getUser = async () => {
@@ -29,8 +33,10 @@ export const getUser = async () => {
       },
     }
   );
-  const data = await response.json();
 
-  return data;
+  const user = await response.json();
+  window.sessionStorage.setItem('name', user.name)
+
+  return user
 };
 

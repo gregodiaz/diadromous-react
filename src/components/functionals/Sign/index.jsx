@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { signRequest } from '../../../services/SingService';
 import NavBar from '../NavBar';
+
+import { signRequest } from '../../../services/SingService';
 
 export default function Sign() {
   const navigate = useNavigate()
 
-  const [uri, setUri] = useState()
-  const [passType, setPassType] = useState('password')
   const [body, setBody] = useState({ name: '', email: '', password: '', })
+  const [passType, setPassType] = useState('password')
+  const [uri, setUri] = useState()
 
   const oppositeUri = uri === 'login' ? 'register' : 'login';
 
@@ -28,9 +29,7 @@ export default function Sign() {
   const handleSubmit = async event => {
     event.preventDefault()
 
-    const data = await signRequest(body, uri)
-
-    window.sessionStorage.setItem("token", data.token);
+    await signRequest(body, uri)
     setBody({ name: '', email: '', password: '' })
     navigate('/')
   }
