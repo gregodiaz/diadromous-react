@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { getTravels } from '../../../services/TravelService';
 
+import { Buy } from '../Buttons'
 import LoadingSpinner from '../../presentionals/LoadingSpinner';
 
 export default function Travels() {
@@ -17,8 +18,6 @@ export default function Travels() {
     setTravels(allTravels);
     setIsLoading(true);
   };
-
-  const handleBuy = event => { event.preventDefault() };
 
   useEffect(() => {
     getAllTravels()
@@ -46,9 +45,7 @@ export default function Travels() {
                 </button>
               </td>
               <td>
-                <button className='btn btn-outline-warning' onClick={handleBuy}>
-                  Buy
-                </button>
+                <Buy value={travel.id} refreshComponent={getAllTravels} />
               </td>
             </tr>
           )
