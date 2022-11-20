@@ -8,13 +8,14 @@ export default function Sign() {
   const navigate = useNavigate()
 
   const [uri, setUri] = useState()
+  const [passType, setPassType] = useState('password')
   const [body, setBody] = useState({ name: '', email: '', password: '', })
 
   const oppositeUri = uri === 'login' ? 'register' : 'login';
 
   const fullInput = type =>
     <input
-      type={type === 'password' ? type : 'text'}
+      type={type}
       name={type}
       className='form-control mb-2'
       placeholder={type}
@@ -40,13 +41,34 @@ export default function Sign() {
 
   return (
     <NavBar>
-      <div className='container-fluid w-auto m-5'>
-        <div className="card bg-secondary text-white">
+      <div className='container-fluid w-auto m-5 p-5 d-flex justify-content-center align-items-center'>
+        <div className="card bg-secondary text-white w-50 my-5">
           <form className='card-body p-2' onSubmit={handleSubmit}>
 
             {fullInput('name')}
             {fullInput('email')}
-            {fullInput('password')}
+
+            <div className="input-group mb-4">
+              <input
+                type={passType}
+                name='password'
+                className="form-control"
+                placeholder="password"
+                onChange={handleChange}
+                required
+              />
+              <div className="input-group-prepend">
+                <button
+                  className="input-group-text"
+                  onClick={event => {
+                    event.preventDefault()
+                    setPassType(passType === 'password' ? 'text' : 'password')
+                  }}
+                >
+                  {passType === 'password' ? 'show' : 'hide'}
+                </button>
+              </div>
+            </div>
 
             <div className='d-flex justify-content-between'>
               <button className='btn btn-primary text-capitalize px-4'>{uri}!</button>

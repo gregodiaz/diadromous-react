@@ -5,7 +5,7 @@ import { getUser } from '../../../services/SingService';
 export default function NavBar({ children }) {
   const navigate = useNavigate();
 
-  const [user, setUser] = useState({ name: '' })
+  const [user, setUser] = useState(null)
   const [token, setToken] = useState(null)
 
   const fetchUser = async () => {
@@ -19,10 +19,8 @@ export default function NavBar({ children }) {
   }
 
   useEffect(() => {
-    const tokenFound = window.sessionStorage.getItem('token')
-
-    if (tokenFound) fetchUser();
-    setToken(tokenFound)
+    setToken(window.sessionStorage.getItem('token'))
+    if (token) fetchUser();
   }, [window.location.pathname])
 
   return (
@@ -44,7 +42,7 @@ export default function NavBar({ children }) {
                   </button>
                 </div> :
                 <div className='text-white text-capitalize'>
-                  hi {user.name}!
+                  {user ? `hi ${user.name}!` : ''}
                   <button className='btn btn-info text-white ml-3' onClick={handleSignOut}>
                     Sign Out
                   </button>

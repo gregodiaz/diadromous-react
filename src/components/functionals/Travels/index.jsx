@@ -25,10 +25,10 @@ export default function Travels() {
   }, []);
 
   return (
-    !isLoading ?
-      <LoadingSpinner /> :
-      <tbody>
-        {
+    <tbody>
+      {
+        !isLoading ?
+          <LoadingSpinner /> :
           travels.map(travel =>
             <tr key={travel.id}>
               <td>{travel.id}</td>
@@ -52,8 +52,8 @@ export default function Travels() {
               </td>
             </tr>
           )
-        }
-      </tbody>
+      }
+    </tbody>
   );
 };
 
