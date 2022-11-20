@@ -19,3 +19,18 @@ export const signRequest = async (body, signType) => {
   return data;
 };
 
+export const getUser = async () => {
+  const response = await fetch(`${baseUrl}api/user`,
+    {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${window.sessionStorage.getItem('token')}`
+      },
+    }
+  );
+  const data = await response.json();
+
+  return data;
+};
+

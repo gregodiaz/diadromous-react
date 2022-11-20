@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getUser } from '../../../services/SingService';
 
 export default function NavBar({ children }) {
   const navigate = useNavigate();
 
-  const [token, setToken] = useState()
+  const [user, setUser] = useState({ name: '' })
+  const [token, setToken] = useState(null)
+
+  const fetchUser = async () => {
+    const user = await getUser()
+    setUser(user)
+  }
 
   const handleSignOut = () => {
     window.sessionStorage.removeItem('token')
@@ -12,7 +19,10 @@ export default function NavBar({ children }) {
   }
 
   useEffect(() => {
-    setToken(window.sessionStorage.getItem('token'))
+    const tokenFound = window.sessionStorage.getItem('token')
+
+    if (tokenFound) fetchUser();
+    setToken(tokenFound)
   }, [window.location.pathname])
 
   return (
@@ -33,8 +43,9 @@ export default function NavBar({ children }) {
                     Sign Up
                   </button>
                 </div> :
-                <div className='text-white'>
-                  <button className='btn btn-info text-white' onClick={handleSignOut}>
+                <div className='text-white text-capitalize'>
+                  hi {user.name}!
+                  <button className='btn btn-info text-white ml-3' onClick={handleSignOut}>
                     Sign Out
                   </button>
                 </div>
