@@ -76,7 +76,7 @@ export default function TravelDetail() {
                       <Back />
                       <Prev />
                       <Next />
-                      <Buy />
+                      <Buy value={travel.id} refreshComponent={getTravelDetail} />
                     </div>
                   </li>
 

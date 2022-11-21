@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { buyTicket, cancelTicket } from '../../../services/TicketService'
+
 // Back
 export const Back = () => {
   const navigate = useNavigate()
@@ -47,12 +49,45 @@ export const Next = () => {
 };
 
 // Buy
-export const Buy = () => {
-  const handleBuy = () => { };
+export const Buy = ({ value, refreshComponent }) => {
+  const navigate = useNavigate()
+
+  const confirmGoLogin = () => {
+    if (window.confirm('You must be logged in to be able to buy a ticket. Do you want to go log in?')) navigate('/login');
+  }
+
+  const confirmBuy = async () => {
+    if (window.confirm('Confirm the purchase?')) {
+      await buyTicket({ travel_id: value })
+      refreshComponent()
+    }
+  }
+
+  const handleBuy = async () => {
+    window.sessionStorage.getItem('token') ?
+      await confirmBuy() :
+      confirmGoLogin();
+  };
 
   return (
     <button className="btn btn-warning" onClick={handleBuy}>
       Buy
+    </button>
+  );
+};
+
+// Cancel
+export const Cancel = ({ value, refreshComponent }) => {
+  const handleCancel = async () => {
+    if (window.confirm('Do you really want to cancel the ticket?')) {
+      await cancelTicket(value)
+      refreshComponent()
+    }
+  };
+
+  return (
+    <button className="btn btn-outline-danger" onClick={handleCancel}>
+      Cancel
     </button>
   );
 };
