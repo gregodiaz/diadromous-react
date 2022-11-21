@@ -28,4 +28,3 @@ export const CardBodyLi = ({ leftTitle, rightTitle, leftText, rightText }) => {
   );
 };
 
-

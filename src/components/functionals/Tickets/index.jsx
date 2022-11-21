@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { getTickets } from '../../../services/TicketService';
 
-import { Cancel } from '../Buttons'
+import CancelButton from '../buttons/CancelButton';
 import LoadingSpinner from '../../presentionals/LoadingSpinner';
 
 export default function Tickets() {
@@ -37,7 +37,10 @@ export default function Tickets() {
               <td>{ticket.travel.departure_date}</td>
               <td>{ticket.travel.arrival_date}</td>
               <td>
-                <Cancel value={ticket.id} refreshComponent={getAllTickets} />
+                <CancelButton
+                  travelId={ticket.id}
+                  refreshComponent={getAllTickets}
+                />
               </td>
             </tr>
           )

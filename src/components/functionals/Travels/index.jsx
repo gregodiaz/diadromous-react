@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { getTravels } from '../../../services/TravelService';
 
-import { Buy } from '../Buttons'
+import BuyButton from '../buttons/BuyButton';
 import LoadingSpinner from '../../presentionals/LoadingSpinner';
+import ShowButton from '../buttons/ShowButton';
 
 export default function Travels() {
-  const navigate = useNavigate()
-
   const [isLoading, setIsLoading] = useState(false)
   const [travels, setTravels] = useState([])
 
@@ -22,6 +20,12 @@ export default function Travels() {
   useEffect(() => {
     getAllTravels()
   }, []);
+
+  useEffect(() => {
+    if (isLoading) {
+      window.sessionStorage.setItem('lastTravelId', travels.length);
+    }
+  }, [isLoading])
 
   return (
     <tbody>
@@ -40,12 +44,14 @@ export default function Travels() {
               <td>{travel.total_passengers}</td>
               <td>{travel.available_passengers}</td>
               <td>
-                <button className='btn btn-outline-info' onClick={() => navigate(`/${travel.id}`)}>
-                  Show
-                </button>
+                <ShowButton travelId={travel.id} />
               </td>
               <td>
-                <Buy value={travel.id} refreshComponent={getAllTravels} />
+                <BuyButton
+                  travelId={travel.id}
+                  availablePassengers={travel.available_passengers}
+                  refreshComponent={getAllTravels}
+                />
               </td>
             </tr>
           )

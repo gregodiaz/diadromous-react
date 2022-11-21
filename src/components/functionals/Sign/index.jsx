@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import DefaultTemplate from '../../presentionals/DefaultTemplate';
+import GoRegisterButton from '../buttons/GoRegisterButton';
 
 import loggedInStore from '../../../store/loggedInStore';
 import { signRequest } from '../../../services/SingService';
@@ -14,8 +15,6 @@ export default function Sign() {
   const [body, setBody] = useState({ name: '', email: '', password: '', })
   const [passType, setPassType] = useState('password')
   const [uri, setUri] = useState()
-
-  const oppositeUri = uri === 'login' ? 'register' : 'login';
 
   const fullInput = type =>
     <input
@@ -75,15 +74,7 @@ export default function Sign() {
 
             <div className='d-flex justify-content-between'>
               <button className='btn btn-primary text-capitalize px-4'>{uri}!</button>
-              <div>
-                {`${uri === 'register' ? 'Already' : 'Dont'} have an account?`}
-                <a
-                  className='btn btn-outline-primary text-capitalize font-italic ml-3'
-                  onClick={() => navigate(`/${oppositeUri}`)}
-                >
-                  go {oppositeUri}!
-                </a>
-              </div>
+              <GoRegisterButton />
             </div>
 
           </form>

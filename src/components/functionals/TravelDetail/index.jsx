@@ -5,7 +5,10 @@ import { getTravels } from '../../../services/TravelService';
 
 import DefaultTemplate from '../../presentionals/DefaultTemplate';
 import LoadingSpinner from '../../presentionals/LoadingSpinner';
-import { Back, Buy, Next, Prev } from '../../functionals/Buttons';
+import BackButton from '../../functionals/buttons/BackButton';
+import BuyButton from '../../functionals/buttons/BuyButton';
+import NextButton from '../../functionals/buttons/NextButton';
+import PrevButton from '../../functionals/buttons/PrevButton';
 import { CardHeader, CardBodyLi } from './style';
 
 export default function TravelDetail() {
@@ -73,10 +76,14 @@ export default function TravelDetail() {
 
                   <li className="list-group-item bg-dark text-white">
                     <div className="container d-flex justify-content-between">
-                      <Back />
-                      <Prev />
-                      <Next />
-                      <Buy value={travel.id} refreshComponent={getTravelDetail} />
+                      <BackButton />
+                      <PrevButton />
+                      <NextButton />
+                      <BuyButton
+                        travelId={travel.id}
+                        availablePassengers={travel.available_passengers}
+                        refreshComponent={getTravelDetail}
+                      />
                     </div>
                   </li>
 
