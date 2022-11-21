@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Sign from './components/functionals/Sign';
 import TravelDetail from './components/functionals/TravelDetail';
 import TravelTable from './components/presentionals/TravelTable';
+import TicketTable from './components/presentionals/TicketTable';
 
 export default function App() {
   return (
@@ -14,6 +15,8 @@ export default function App() {
 
         <Route exact path='/login' element={<Sign />} />
         <Route exact path='/register' element={<Sign />} />
+
+        <Route exact path='/tickets' element={<TicketTable />} />
       </Routes>
     </Router>
   );
