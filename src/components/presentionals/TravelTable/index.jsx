@@ -1,12 +1,12 @@
 import React from 'react';
 
+import DefaultTemplate from '../../presentionals/DefaultTemplate';
 import Travels from '../../functionals/Travels';
-import NavBar from '../../functionals/NavBar';
 
 export default function TravelTable() {
 
   return (
-    <NavBar>
+    <DefaultTemplate>
       <div className='container'>
         <table className='table table-striped table-dark table-hover'>
           <thead>
@@ -26,7 +26,7 @@ export default function TravelTable() {
           <Travels />
         </table>
       </div>
-    </NavBar>
+    </DefaultTemplate>
   );
 };
 

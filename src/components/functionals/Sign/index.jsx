@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import NavBar from '../NavBar';
+import DefaultTemplate from '../../presentionals/DefaultTemplate';
 
 import loggedInStore from '../../../store/loggedInStore';
 import { signRequest } from '../../../services/SingService';
@@ -43,7 +43,7 @@ export default function Sign() {
   }, [window.location.pathname])
 
   return (
-    <NavBar>
+    <DefaultTemplate>
       <div className='container-fluid w-auto m-5 p-5 d-flex justify-content-center align-items-center'>
         <div className="card bg-secondary text-white w-50 my-5">
           <form className='card-body p-2' onSubmit={handleSubmit}>
@@ -89,7 +89,7 @@ export default function Sign() {
           </form>
         </div>
       </div>
-    </NavBar>
+    </DefaultTemplate>
   )
 };
 

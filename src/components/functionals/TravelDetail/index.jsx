@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 
 import { getTravel } from '../../../services/TravelService';
 
+import DefaultTemplate from '../../presentionals/DefaultTemplate';
 import LoadingSpinner from '../../presentionals/LoadingSpinner';
-import NavBar from '../../functionals/NavBar';
 import { Back, Buy, Next, Prev } from '../../functionals/Buttons';
 import { CardHeader, CardBodyLi } from './style';
 
@@ -32,7 +32,7 @@ export default function TravelDetail() {
   }, [params.id]);
 
   return (
-    <NavBar>
+    <DefaultTemplate>
       <div className='container-fluid w-auto m-5'>
         {
           !isLoading ?
@@ -85,7 +85,7 @@ export default function TravelDetail() {
             </div>
         }
       </div>
-    </NavBar>
+    </DefaultTemplate>
   );
 };
 
