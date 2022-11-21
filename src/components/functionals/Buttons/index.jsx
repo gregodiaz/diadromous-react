@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { buyTicket } from '../../../services/TicketService'
+import { buyTicket, cancelTicket } from '../../../services/TicketService'
 
 // Back
 export const Back = () => {
@@ -72,6 +72,22 @@ export const Buy = ({ value, refreshComponent }) => {
   return (
     <button className="btn btn-warning" onClick={handleBuy}>
       Buy
+    </button>
+  );
+};
+
+// Cancel
+export const Cancel = ({ value, refreshComponent }) => {
+  const handleCancel = async () => {
+    if (window.confirm('Do you really want to cancel the ticket?')) {
+      await cancelTicket(value)
+      refreshComponent()
+    }
+  };
+
+  return (
+    <button className="btn btn-outline-danger" onClick={handleCancel}>
+      Cancel
     </button>
   );
 };
