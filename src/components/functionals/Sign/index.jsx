@@ -3,10 +3,13 @@ import { useNavigate } from 'react-router-dom';
 
 import NavBar from '../NavBar';
 
+import loggedInStore from '../../../store/loggedInStore';
 import { signRequest } from '../../../services/SingService';
 
 export default function Sign() {
   const navigate = useNavigate()
+
+  const { setLoggedIn } = loggedInStore()
 
   const [body, setBody] = useState({ name: '', email: '', password: '', })
   const [passType, setPassType] = useState('password')
@@ -30,6 +33,7 @@ export default function Sign() {
     event.preventDefault()
 
     await signRequest(body, uri)
+    setLoggedIn(true)
     setBody({ name: '', email: '', password: '' })
     navigate('/')
   }
