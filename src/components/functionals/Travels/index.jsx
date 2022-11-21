@@ -7,14 +7,14 @@ import LoadingSpinner from '../../presentionals/LoadingSpinner';
 import ShowButton from '../buttons/ShowButton';
 
 export default function Travels() {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
   const [travels, setTravels] = useState([])
 
   const getAllTravels = async () => {
     const allTravels = await getTravels()
 
     setTravels(allTravels);
-    setIsLoading(true);
+    setIsLoaded(true);
   };
 
   useEffect(() => {
@@ -22,18 +22,18 @@ export default function Travels() {
   }, []);
 
   useEffect(() => {
-    if (isLoading) {
+    if (isLoaded) {
       window.sessionStorage.setItem('lastTravelId', travels.length);
     }
-  }, [isLoading])
+  }, [isLoaded])
 
   return (
     <tbody>
       {
-        !isLoading ?
+        !isLoaded ?
           <LoadingSpinner /> :
           travels.map(travel =>
-            <tr key={travel.id}>
+            <tr key={travel.id} className={travel.available_passengers === 0 ? 'text-muted' : ''} >
               <td>{travel.id}</td>
               <td>${travel.price}</td>
               {

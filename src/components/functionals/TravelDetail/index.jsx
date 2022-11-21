@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom';
 
 import { getTravels } from '../../../services/TravelService';
 
-import DefaultTemplate from '../../presentionals/DefaultTemplate';
-import LoadingSpinner from '../../presentionals/LoadingSpinner';
 import BackButton from '../../functionals/buttons/BackButton';
 import BuyButton from '../../functionals/buttons/BuyButton';
+import DefaultTemplate from '../../presentionals/DefaultTemplate';
+import LoadingSpinner from '../../presentionals/LoadingSpinner';
 import NextButton from '../../functionals/buttons/NextButton';
 import PrevButton from '../../functionals/buttons/PrevButton';
 import { CardHeader, CardBodyLi } from './style';
@@ -14,15 +14,15 @@ import { CardHeader, CardBodyLi } from './style';
 export default function TravelDetail() {
   const params = useParams()
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
   const [travel, setTravel] = useState()
 
   const getTravelDetail = async () => {
-    setIsLoading(false);
+    setIsLoaded(false);
     const travelDetail = await getTravels(params.id)
 
     setTravel(travelDetail);
-    setIsLoading(true);
+    setIsLoaded(true);
   };
 
   const validationMessage = validation =>
@@ -38,7 +38,7 @@ export default function TravelDetail() {
     <DefaultTemplate>
       <div className='container-fluid w-auto m-5'>
         {
-          !isLoading ?
+          !isLoaded ?
             <LoadingSpinner /> :
             <div className="card bg-dark text-white">
               <CardHeader
