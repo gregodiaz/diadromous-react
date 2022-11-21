@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { getTravel } from '../../../services/TravelService';
+import { getTravels } from '../../../services/TravelService';
 
 import DefaultTemplate from '../../presentionals/DefaultTemplate';
 import LoadingSpinner from '../../presentionals/LoadingSpinner';
@@ -16,7 +16,7 @@ export default function TravelDetail() {
 
   const getTravelDetail = async () => {
     setIsLoading(false);
-    const travelDetail = await getTravel(params.id)
+    const travelDetail = await getTravels(params.id)
 
     setTravel(travelDetail);
     setIsLoading(true);
