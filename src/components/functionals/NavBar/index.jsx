@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function NavBar({ children }) {
   const navigate = useNavigate();
 
   const [name, setName] = useState(window.sessionStorage.getItem('name'))
+  const [uri, setUri] = useState()
+
+  const oppositeUri = uri === '' ? 'tickets' : '';
 
   const handleSignOut = () => {
     window.sessionStorage.clear()
     setName(null)
   }
+
+  useEffect(() => {
+    setUri(window.location.pathname.split('/').pop())
+  }, [window.location.pathname])
 
   return (
     <div>
@@ -23,7 +30,10 @@ export default function NavBar({ children }) {
               name ?
                 <div className='text-white text-capitalize'>
                   hi {name}!
-                  <button className='btn btn-info text-white ml-3' onClick={handleSignOut}>
+                  <button className='btn btn-outline-info text-white mx-2 ml-3' onClick={() => navigate(`/${oppositeUri}`)}>
+                    {uri === 'tickets' ? 'Travels' : 'My Tickets'}
+                  </button>
+                  <button className='btn btn-info text-white mx-2' onClick={handleSignOut}>
                     Sign Out
                   </button>
                 </div> :
