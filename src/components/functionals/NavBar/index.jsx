@@ -19,7 +19,7 @@ export default function NavBar({ children }) {
 
   return (
     <div>
-      <div className='container-fluid position-fixed fixed-top'>
+      <div className='container-fluid fixed-top mb-5'>
         <div className='bg-dark shadow d-flex justify-content-between'>
           <div className='btn btn-outline-warning mx-2' onClick={() => navigate('/')}>
             Diadromous

@@ -1,19 +1,25 @@
 const baseUrl = process.env.REACT_APP_BASE_URL;
 
 export const getTickets = async () => {
-  const response = await fetch(`${baseUrl}api/v1/tickets`,
-    {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${window.sessionStorage.getItem('token')}`
-      },
-    }
-  );
+  try {
+    const response = await fetch(`${baseUrl}api/v1/tickets`,
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${window.sessionStorage.getItem('token')}`
+        },
+      }
+    );
+    const status = response.status;
+    if (status >= 400) return response;
 
-  const data = await response.json();
+    const data = await response.json();
 
-  return data;
+    return data;
+  } catch (error) {
+    return { error };
+  }
 };
 
 export const buyTicket = async body => {

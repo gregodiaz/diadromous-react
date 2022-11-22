@@ -14,14 +14,18 @@ import { CardHeader, CardBodyLi } from './style';
 export default function TravelDetail() {
   const params = useParams()
 
+  const [error, setError] = useState()
   const [isLoaded, setIsLoaded] = useState(false)
   const [travel, setTravel] = useState()
 
   const getTravelDetail = async () => {
     setIsLoaded(false);
-    const travelDetail = await getTravels(params.id)
+    const response = await getTravels(params.id)
 
-    setTravel(travelDetail);
+    if (response.error) return setError(response.error.message);
+    if (response.status >= 400) return setError(response.statusText);
+
+    setTravel(response);
     setIsLoaded(true);
   };
 
@@ -39,7 +43,13 @@ export default function TravelDetail() {
       <div className='container-fluid w-auto m-5'>
         {
           !isLoaded ?
-            <LoadingSpinner /> :
+            error ?
+              <div className='container border rounded border-danger text-danger h-1 my-2 p-3'>
+                {error}
+              </div> :
+              <LoadingSpinner />
+            :
+
             <div className="card bg-dark text-white">
               <CardHeader
                 departure={travel.cities[0].name}
@@ -92,7 +102,7 @@ export default function TravelDetail() {
             </div>
         }
       </div>
-    </DefaultTemplate>
+    </DefaultTemplate >
   );
 };
 

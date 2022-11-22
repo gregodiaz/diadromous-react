@@ -7,9 +7,9 @@ export default function TravelTable() {
 
   return (
     <DefaultTemplate>
-      <div className='container'>
+      <div className='container-fluid'>
         <table className='table table-striped table-dark table-hover'>
-          <thead>
+          <thead className='bg-dark sticky-top shadow-sm'>
             <tr>
               <th className='text-center' >#</th>
               <th className='text-center' >Seat Number</th>

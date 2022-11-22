@@ -1,9 +1,17 @@
 const baseUrl = process.env.REACT_APP_BASE_URL;
 
 export const getTravels = async (travelId = '') => {
-  const response = await fetch(`${baseUrl}api/v1/travels/${travelId}`);
-  const data = await response.json();
+  try {
+    const response = await fetch(`${baseUrl}api/v1/travels/${travelId}`);
 
-  return data;
+    const status = response.status;
+    if (status >= 400) return response;
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    return { error };
+  }
 };
 
