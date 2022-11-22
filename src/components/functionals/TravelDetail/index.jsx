@@ -1,25 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { getTravel } from '../../../services/TravelService';
+import { getTravels } from '../../../services/TravelService';
 
+import BackButton from '../../functionals/buttons/BackButton';
+import BuyButton from '../../functionals/buttons/BuyButton';
+import DefaultTemplate from '../../presentionals/DefaultTemplate';
 import LoadingSpinner from '../../presentionals/LoadingSpinner';
-import NavBar from '../../functionals/NavBar';
-import { Back, Buy, Next, Prev } from '../../functionals/Buttons';
+import NextButton from '../../functionals/buttons/NextButton';
+import PrevButton from '../../functionals/buttons/PrevButton';
 import { CardHeader, CardBodyLi } from './style';
 
 export default function TravelDetail() {
   const params = useParams()
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState()
+  const [isLoaded, setIsLoaded] = useState(false)
   const [travel, setTravel] = useState()
 
   const getTravelDetail = async () => {
-    setIsLoading(false);
-    const travelDetail = await getTravel(params.id)
+    setIsLoaded(false);
+    const response = await getTravels(params.id)
 
-    setTravel(travelDetail);
-    setIsLoading(true);
+    if (response.error) return setError(response.error.message);
+    if (response.status >= 400) return setError(response.statusText);
+
+    setTravel(response);
+    setIsLoaded(true);
   };
 
   const validationMessage = validation =>
@@ -32,11 +39,17 @@ export default function TravelDetail() {
   }, [params.id]);
 
   return (
-    <NavBar>
+    <DefaultTemplate>
       <div className='container-fluid w-auto m-5'>
         {
-          !isLoading ?
-            <LoadingSpinner /> :
+          !isLoaded ?
+            error ?
+              <div className='container border rounded border-danger text-danger h-1 my-2 p-3'>
+                {error}
+              </div> :
+              <LoadingSpinner />
+            :
+
             <div className="card bg-dark text-white">
               <CardHeader
                 departure={travel.cities[0].name}
@@ -73,10 +86,14 @@ export default function TravelDetail() {
 
                   <li className="list-group-item bg-dark text-white">
                     <div className="container d-flex justify-content-between">
-                      <Back />
-                      <Prev />
-                      <Next />
-                      <Buy value={travel.id} refreshComponent={getTravelDetail} />
+                      <BackButton />
+                      <PrevButton />
+                      <NextButton />
+                      <BuyButton
+                        travelId={travel.id}
+                        availablePassengers={travel.available_passengers}
+                        refreshComponent={getTravelDetail}
+                      />
                     </div>
                   </li>
 
@@ -85,7 +102,7 @@ export default function TravelDetail() {
             </div>
         }
       </div>
-    </NavBar>
+    </DefaultTemplate >
   );
 };
 

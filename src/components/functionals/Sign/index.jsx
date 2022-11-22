@@ -1,38 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import NavBar from '../NavBar';
+import DefaultTemplate from '../../presentionals/DefaultTemplate';
+import GoRegisterButton from '../buttons/GoRegisterButton';
+import Input from '../../presentionals/inputs/Input';
+import InputPassword from '../../presentionals/inputs/InputPassword';
 
 import loggedInStore from '../../../store/loggedInStore';
-import { signRequest } from '../../../services/SingService';
+import { getUser, signRequest } from '../../../services/SingService';
 
 export default function Sign() {
   const navigate = useNavigate()
 
   const { setLoggedIn } = loggedInStore()
 
+  const [error, setError] = useState()
   const [body, setBody] = useState({ name: '', email: '', password: '', })
-  const [passType, setPassType] = useState('password')
   const [uri, setUri] = useState()
-
-  const oppositeUri = uri === 'login' ? 'register' : 'login';
-
-  const fullInput = type =>
-    <input
-      type={type}
-      name={type}
-      className='form-control mb-2'
-      placeholder={type}
-      onChange={handleChange}
-      required
-    />
 
   const handleChange = ({ target }) => setBody({ ...body, [target.name]: target.value })
 
   const handleSubmit = async event => {
     event.preventDefault()
 
-    await signRequest(body, uri)
+    const response = await signRequest(body, uri)
+
+    if (response.error) return setError(response.error.message);
+    if (response.status >= 400) return setError(response.statusText);
+
     setLoggedIn(true)
     setBody({ name: '', email: '', password: '' })
     navigate('/')
@@ -43,53 +38,31 @@ export default function Sign() {
   }, [window.location.pathname])
 
   return (
-    <NavBar>
+    <DefaultTemplate>
       <div className='container-fluid w-auto m-5 p-5 d-flex justify-content-center align-items-center'>
         <div className="card bg-secondary text-white w-50 my-5">
           <form className='card-body p-2' onSubmit={handleSubmit}>
+            {
+              error ?
+                <div className='container border rounded border-danger bg-dark text-danger h-1 my-2 p-3'>
+                  {error}
+                </div> :
+                ''
+            }
 
-            {fullInput('name')}
-            {fullInput('email')}
-
-            <div className="input-group mb-4">
-              <input
-                type={passType}
-                name='password'
-                className="form-control"
-                placeholder="password"
-                onChange={handleChange}
-                required
-              />
-              <div className="input-group-prepend">
-                <button
-                  className="input-group-text"
-                  onClick={event => {
-                    event.preventDefault()
-                    setPassType(passType === 'password' ? 'text' : 'password')
-                  }}
-                >
-                  {passType === 'password' ? 'show' : 'hide'}
-                </button>
-              </div>
-            </div>
+            <Input type='name' handleChange={handleChange} />
+            <Input type='email' handleChange={handleChange} />
+            <InputPassword handleChange={handleChange} />
 
             <div className='d-flex justify-content-between'>
               <button className='btn btn-primary text-capitalize px-4'>{uri}!</button>
-              <div>
-                {`${uri === 'register' ? 'Already' : 'Dont'} have an account?`}
-                <a
-                  className='btn btn-outline-primary text-capitalize font-italic ml-3'
-                  onClick={() => navigate(`/${oppositeUri}`)}
-                >
-                  go {oppositeUri}!
-                </a>
-              </div>
+              <GoRegisterButton />
             </div>
 
           </form>
         </div>
       </div>
-    </NavBar>
+    </DefaultTemplate>
   )
 };
 

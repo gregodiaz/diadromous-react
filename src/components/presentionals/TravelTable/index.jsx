@@ -1,15 +1,15 @@
 import React from 'react';
 
+import DefaultTemplate from '../../presentionals/DefaultTemplate';
 import Travels from '../../functionals/Travels';
-import NavBar from '../../functionals/NavBar';
 
 export default function TravelTable() {
 
   return (
-    <NavBar>
-      <div className='container'>
+    <DefaultTemplate>
+      <div className='container-fluid'>
         <table className='table table-striped table-dark table-hover'>
-          <thead>
+          <thead className='bg-dark sticky-top shadow-sm'>
             <tr>
               <th>#</th>
               <th>Price</th>
@@ -26,7 +26,7 @@ export default function TravelTable() {
           <Travels />
         </table>
       </div>
-    </NavBar>
+    </DefaultTemplate>
   );
 };
 

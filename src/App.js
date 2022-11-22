@@ -9,7 +9,12 @@ import TicketTable from './components/presentionals/TicketTable';
 import loggedInStore from './store/loggedInStore';
 
 export default function App() {
-  const { loggedIn } = loggedInStore()
+  const { loggedIn, setLoggedIn } = loggedInStore()
+
+  useEffect(() => {
+    const name = (window.sessionStorage.getItem('name'))
+    if(name) setLoggedIn(true);
+  }, [])
 
   return (
     <Router>
