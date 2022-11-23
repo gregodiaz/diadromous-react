@@ -41,10 +41,13 @@ export default function Tickets() {
               <td className='text-center'>{ticket.travel.id}</td>
               <td>${ticket.travel.price}</td>
               {
-                ticket.travel.cities.map(city => <td key={city.id}>{city.name}</td>)
+                ticket.travel.cities.map(city =>
+                  <>
+                    <td key={city.id}>{city.name}</td>
+                    <td key={city.id}>{city.port_call}</td>
+                  </>
+                )
               }
-              <td>{ticket.travel.departure_date}</td>
-              <td>{ticket.travel.arrival_date}</td>
               <td>
                 <CancelButton
                   travelId={ticket.id}

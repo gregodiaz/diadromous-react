@@ -44,10 +44,13 @@ export default function Travels() {
               <td>{travel.id}</td>
               <td>${travel.price}</td>
               {
-                travel.cities.map(city => <td key={city.id}>{city.name}</td>)
+                travel.cities.map(city =>
+                  <>
+                    <td key={city.id}>{city.name}</td>
+                    <td key={city.id}>{city.port_call}</td>
+                  </>
+                )
               }
-              <td>{travel.departure_date}</td>
-              <td>{travel.arrival_date}</td>
               <td>{travel.total_passengers}</td>
               <td>{travel.available_passengers}</td>
               <td>

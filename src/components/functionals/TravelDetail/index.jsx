@@ -61,14 +61,14 @@ export default function TravelDetail() {
                 <ul className="list-group list-group-flush">
                   <CardBodyLi
                     leftTitle={travel.cities[0].type_name}
-                    leftText={`${travel.departure_date} - ${travel.cities[0].name}`}
+                    leftText={`${travel.cities[0].port_call} - ${travel.cities[0].name}`}
                     rightTitle={'Price'}
                     rightText={`$ ${travel.price}`}
                   />
 
                   <CardBodyLi
                     leftTitle={travel.cities[1].type_name}
-                    leftText={`${travel.arrival_date} - ${travel.cities[1].name}`}
+                    leftText={`${travel.cities[1].port_call} - ${travel.cities[1].name}`}
                     rightTitle={'Tickets [Remaining/Total]'}
                     rightText={`${travel.available_passengers}/${travel.total_passengers}`}
                   />
@@ -78,9 +78,13 @@ export default function TravelDetail() {
                     leftText={
                       typeof (travel.validation) === 'boolean' ?
                         validationMessage(travel.validation) :
-                        Object.keys(travel.validation).map(date =>
-                          <div key={date}>{date} - {travel.validation[date]}%</div>
-                        )
+                        <ul>
+                          {travel.validation.map(element =>
+                            <li key={element.date}>
+                              {element.date} - {element.percentage}%
+                            </li>
+                          )}
+                        </ul>
                     }
                   />
 

@@ -16,8 +16,8 @@ export default function TravelTable() {
               <th className='text-center' >Travel Id</th>
               <th>Price</th>
               <th>Departure City</th>
-              <th>Arrival city</th>
               <th>Departure date</th>
+              <th>Arrival city</th>
               <th>Arrival date</th>
               <th>Cancel Ticket</th>
             </tr>
