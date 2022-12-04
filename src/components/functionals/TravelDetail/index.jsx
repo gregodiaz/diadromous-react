@@ -74,17 +74,20 @@ export default function TravelDetail() {
                   />
 
                   <CardBodyLi
-                    leftTitle={'Validation'}
+                    leftTitle={'Validation:'}
                     leftText={
-                      typeof (travel.validation) === 'boolean' ?
+                      typeof (travel.validation[0]) === 'boolean' ?
                         validationMessage(travel.validation) :
-                        <ul>
-                          {travel.validation.map(element =>
-                            <li key={element.date}>
-                              {element.date} - {element.percentage}%
-                            </li>
-                          )}
-                        </ul>
+                        <>
+                          Odds of canceling the travel according to the day:
+                          <ul>
+                            {travel.validation[0].map(element =>
+                              <li key={element.date}>
+                                {element.date} - {element.percentage}%
+                              </li>
+                            )}
+                          </ul>
+                        </>
                     }
                   />
 

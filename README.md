@@ -13,13 +13,13 @@ git clone https://github.com/gregodiaz/diadromous-react.git && cd diadromous-rea
 ```bash
 npm i
 ```
-3. Create the .env and set the corresponding url where the backend project is runing
+3. Create the .env
 ```bash
 cp .env.example .env
 ```
 5. Init the project
 ```bash
-php npm start
+npm start
 ```
 6. Ready to go!
 
