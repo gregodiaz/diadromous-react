@@ -8,21 +8,18 @@ export default function InputPassword({ handleChange }) {
       <input
         type={passType}
         name='password'
-        className="form-control"
+        className="form-control input-group-prepend"
         placeholder="password"
         onChange={handleChange}
         required
       />
-      <div className="input-group-prepend">
-        <button
-          className="input-group-text"
-          onClick={event => {
-            event.preventDefault()
-            setPassType(passType === 'password' ? 'text' : 'password')
-          }}
-        >
-          {passType === 'password' ? 'show' : 'hide'}
-        </button>
+      <div className="btn input-group-text"
+        onClick={event => {
+          event.preventDefault()
+          setPassType(passType === 'password' ? 'text' : 'password')
+        }}
+      >
+        {passType === 'password' ? 'show' : 'hide'}
       </div>
     </div>
   )

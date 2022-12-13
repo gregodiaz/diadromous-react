@@ -16,9 +16,10 @@ export const signRequest = async (body, signType) => {
       }
     );
     const status = response.status;
-    if (status >= 400) return response;
-
     const data = await response.json();
+
+    if (status >= 400) return { data, error: true };
+
     window.sessionStorage.setItem('token', data.token)
 
     const user = await getUser()

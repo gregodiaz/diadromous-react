@@ -22,17 +22,28 @@ export default function TravelDetail() {
     setIsLoaded(false);
     const response = await getTravels(params.id)
 
-    if (response.error) return setError(response.error.message);
-    if (response.status >= 400) return setError(response.statusText);
+    if (response.error) return setError(response.data.message);
 
     setTravel(response);
     setIsLoaded(true);
   };
 
-  const validationMessage = validation =>
-    validation ?
-      'The travel is validated.' :
-      'The travel is NOT validated, it is canceled due to weather conditions.';
+  const forecastMessage = () => {
+    if (travel.forecast.message !== undefined) return travel.forecast.message;
+    if (travel.forecast.validated !== undefined)
+      return travel.forecast.validated ?
+        'The travel is confirmed.' :
+        'The travel is NOT confirmed, it is canceled due to weather conditions.';
+
+    else return <>
+      <div>
+        According to the forecasted weather conditions, the chances of the travel being canceled are
+      </div>
+      <div>
+        ${travel.forecast.percentage.toFixed(2)}% from now to ${travel.forecast.date}
+      </div>
+    </>;
+  }
 
   useEffect(() => {
     getTravelDetail()
@@ -74,21 +85,8 @@ export default function TravelDetail() {
                   />
 
                   <CardBodyLi
-                    leftTitle={'Validation:'}
-                    leftText={
-                      typeof (travel.validation[0]) === 'boolean' ?
-                        validationMessage(travel.validation) :
-                        <>
-                          Odds of canceling the travel according to the day:
-                          <ul>
-                            {travel.validation[0].map(element =>
-                              <li key={element.date}>
-                                {element.date} - {element.percentage}%
-                              </li>
-                            )}
-                          </ul>
-                        </>
-                    }
+                    leftTitle={'Weather forecast validation:'}
+                    leftText={forecastMessage()}
                   />
 
                   <li className="list-group-item bg-dark text-white">
@@ -97,9 +95,10 @@ export default function TravelDetail() {
                       <PrevButton />
                       <NextButton />
                       <BuyButton
-                        travelId={travel.id}
                         availablePassengers={travel.available_passengers}
                         refreshComponent={getTravelDetail}
+                        travelId={travel.id}
+                        cancelled={travel.forecast.validated !== undefined ? !travel.forecast.validated : false}
                       />
                     </div>
                   </li>

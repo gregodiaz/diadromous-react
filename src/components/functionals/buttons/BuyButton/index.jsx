@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { buyTicket } from '../../../../services/TicketService';
 
-export default function BuyButton({ travelId, availablePassengers, refreshComponent }) {
+export default function BuyButton({ travelId, availablePassengers, refreshComponent, cancelled }) {
   const navigate = useNavigate()
   const zeroTickets = availablePassengers === 0
+  const disable = zeroTickets || cancelled
 
   const confirmGoLogin = () => {
     if (window.confirm('You must be logged in to be able to buy a ticket. Do you want to go log in?')) navigate('/login');
@@ -26,9 +27,9 @@ export default function BuyButton({ travelId, availablePassengers, refreshCompon
 
   return (
     <button
-      className={`btn btn-${zeroTickets ? 'outline-secondary' : 'warning'}`}
+      className={`btn btn-${disable? 'outline-secondary' : 'warning'}`}
+      disabled={disable}
       onClick={handleBuy}
-      disabled={zeroTickets}
     >
       Buy
     </button>

@@ -5,9 +5,9 @@ export const getTravels = async (travelId = '') => {
     const response = await fetch(`${baseUrl}api/v1/travels/${travelId}`);
 
     const status = response.status;
-    if (status >= 400) return response;
-
     const data = await response.json();
+
+    if (status >= 400) return { data, error: true };
 
     return data;
   } catch (error) {

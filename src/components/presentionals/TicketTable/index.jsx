@@ -12,7 +12,6 @@ export default function TravelTable() {
           <thead className='bg-dark sticky-top shadow-sm'>
             <tr>
               <th className='text-center' >#</th>
-              <th className='text-center' >Seat Number</th>
               <th className='text-center' >Travel Id</th>
               <th>Price</th>
               <th>Departure City</th>

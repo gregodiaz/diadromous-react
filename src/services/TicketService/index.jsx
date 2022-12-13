@@ -12,9 +12,9 @@ export const getTickets = async () => {
       }
     );
     const status = response.status;
-    if (status >= 400) return response;
-
     const data = await response.json();
+
+    if (status >= 400) return { data, error: true };
 
     return data;
   } catch (error) {

@@ -17,10 +17,8 @@ export default function TravelTable() {
               <th>Departure date</th>
               <th>Arrival city</th>
               <th>Arrival date</th>
-              <th>Total Passengers</th>
-              <th>Remaining Tickets</th>
-              <th>Show Forecast</th>
-              <th>Buy Ticket</th>
+              <th>Tickets</th>
+              <th>Details</th>
             </tr>
           </thead>
           <Travels />

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import { getTravels } from '../../../services/TravelService';
 
-import BuyButton from '../buttons/BuyButton';
 import LoadingSpinner from '../../presentionals/LoadingSpinner';
 import ShowButton from '../buttons/ShowButton';
 
@@ -14,8 +13,7 @@ export default function Travels() {
   const getAllTravels = async () => {
     const response = await getTravels()
 
-    if (response.error) return setError(response.error.message);
-    if (response.status >= 400) return setError(response.statusText);
+    if (response.error) return setError(response.data.message);
 
     setTravels(response);
     setIsLoaded(true);
@@ -37,8 +35,7 @@ export default function Travels() {
             <div className='container border rounded border-danger text-danger h-1 my-2 p-3'>
               {error}
             </div> :
-            <LoadingSpinner />
-          :
+            <LoadingSpinner /> :
           travels.map(travel =>
             <tr key={travel.id} className={travel.available_passengers === 0 ? 'text-muted' : ''} >
               <td>{travel.id}</td>
@@ -46,27 +43,19 @@ export default function Travels() {
               {
                 travel.cities.map(city =>
                   <>
-                    <td key={city.id}>{city.name}</td>
-                    <td key={city.id}>{city.port_call}</td>
+                    <td>{city.name}</td>
+                    <td>{city.port_call}</td>
                   </>
                 )
               }
-              <td>{travel.total_passengers}</td>
-              <td>{travel.available_passengers}</td>
+              <td>{travel.available_passengers} / {travel.total_passengers}</td>
               <td>
                 <ShowButton travelId={travel.id} />
-              </td>
-              <td>
-                <BuyButton
-                  travelId={travel.id}
-                  availablePassengers={travel.available_passengers}
-                  refreshComponent={getAllTravels}
-                />
               </td>
             </tr>
           )
       }
-    </tbody>
+    </tbody >
   );
 };
 

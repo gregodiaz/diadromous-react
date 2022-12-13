@@ -25,8 +25,7 @@ export default function Sign() {
 
     const response = await signRequest(body, uri)
 
-    if (response.error) return setError(response.error.message);
-    if (response.status >= 400) return setError(response.statusText);
+    if (response.error) return setError(response.data.message);
 
     setLoggedIn(true)
     setBody({ name: '', email: '', password: '' })
