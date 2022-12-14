@@ -6,6 +6,8 @@ In this application you will be able to see all the fictitious boat trips create
 In addition, if you register, you can buy tickets for the available travels, see all the ones you have bought and cancel them if you want.
 Both the cities and the weather forecast are real. The weather forecast is obtained from [open-meteo](https://open-meteo.com).
 
+## Prerequisites
+- Have Node.js and npm installed
 
 ## Installation
 1. Clone project and go to the folder
